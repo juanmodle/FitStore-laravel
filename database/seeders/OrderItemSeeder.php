@@ -20,6 +20,9 @@ class OrderItemSeeder extends Seeder
                     'unit_price_cents' => $variant->price_cents, 'line_total_cents' => $variant->price_cents,
                 ]);
             }
+            foreach ($order->lineDiscounts() as $itemId => $discount) {
+                OrderItem::whereKey($itemId)->update(['discount_cents' => $discount]);
+            }
         }
     }
 }

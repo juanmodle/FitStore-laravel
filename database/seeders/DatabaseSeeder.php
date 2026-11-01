@@ -20,6 +20,9 @@ class DatabaseSeeder extends Seeder
 
         try {
             $this->call([
+                PermissionSeeder::class,
+                RoleSeeder::class,
+                RolePermissionSeeder::class,
                 CategorySeeder::class,
                 BrandSeeder::class,
                 TagSeeder::class,
@@ -30,6 +33,7 @@ class DatabaseSeeder extends Seeder
                 CategoryTranslationSeeder::class,
                 ProductTagSeeder::class,
                 UserSeeder::class,
+                UserRoleSeeder::class,
                 CustomerProfileSeeder::class,
                 AddressSeeder::class,
                 CartSeeder::class,

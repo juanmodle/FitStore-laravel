@@ -21,6 +21,7 @@ class OrderItemFactory extends Factory
             'quantity' => 2,
             'unit_price_cents' => 1000,
             'line_total_cents' => 2000,
+            'discount_cents' => 0,
         ];
     }
 }

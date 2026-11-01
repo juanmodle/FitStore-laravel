@@ -10,7 +10,7 @@ class OrderItem extends Model
     use HasFactory;
 
     protected $fillable = [
-        'order_id', 'product_variant_id', 'product_name', 'sku', 'quantity', 'unit_price_cents', 'line_total_cents',
+        'order_id', 'product_variant_id', 'product_name', 'sku', 'quantity', 'unit_price_cents', 'line_total_cents', 'discount_cents',
     ];
 
     protected function casts(): array
@@ -19,7 +19,13 @@ class OrderItem extends Model
             'quantity' => 'integer',
             'unit_price_cents' => 'integer',
             'line_total_cents' => 'integer',
+            'discount_cents' => 'integer',
         ];
+    }
+
+    public function getNetTotalCentsAttribute(): int
+    {
+        return $this->line_total_cents - $this->discount_cents;
     }
 
     public function order()

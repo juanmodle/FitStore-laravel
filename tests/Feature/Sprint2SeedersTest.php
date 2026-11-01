@@ -16,7 +16,7 @@ it('puebla todas las entidades y mantiene las relaciones coherentes', function (
     $this->seed();
 
     $expected = [
-        'users' => 4, 'customer_profiles' => 4, 'addresses' => 4, 'categories' => 4,
+        'users' => 7, 'customer_profiles' => 4, 'addresses' => 4, 'categories' => 4,
         'brands' => 3, 'products' => 8, 'product_variants' => 16, 'product_images' => 8,
         'tags' => 3, 'carts' => 4, 'cart_items' => 4, 'discounts' => 3, 'coupons' => 2,
         'orders' => 4, 'order_items' => 8, 'vip_subscriptions' => 1, 'payments' => 5,
@@ -29,9 +29,11 @@ it('puebla todas las entidades y mantiene las relaciones coherentes', function (
     }
     foreach (Order::with('items', 'payments')->get() as $order) {
         expect($order->items->sum('line_total_cents'))->toBe($order->subtotal_cents)
+            ->and($order->items->sum('discount_cents'))->toBe($order->discount_cents)
             ->and($order->total_cents)->toBe($order->subtotal_cents - $order->discount_cents + $order->shipping_cents + $order->tax_cents);
         foreach ($order->items as $item) {
             expect($item->line_total_cents)->toBe($item->quantity * $item->unit_price_cents);
+            expect($item->net_total_cents)->toBe($item->line_total_cents - $item->discount_cents);
         }
         foreach ($order->payments as $payment) {
             expect($payment->amount_cents)->toBe($order->total_cents);

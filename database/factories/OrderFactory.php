@@ -40,6 +40,7 @@ class OrderFactory extends Factory
                 'quantity' => 1,
                 'unit_price_cents' => $order->subtotal_cents,
                 'line_total_cents' => $order->subtotal_cents,
+                'discount_cents' => $order->discount_cents,
             ]);
         });
     }

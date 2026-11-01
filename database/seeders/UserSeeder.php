@@ -18,5 +18,12 @@ class UserSeeder extends Seeder
                 'locale' => $index === 3 ? 'en' : 'es', 'email_verified_at' => now(),
             ]);
         }
+
+        foreach (['editor' => 'Editor FitStore', 'manager' => 'Manager FitStore', 'admin' => 'Administrador FitStore'] as $role => $name) {
+            User::firstOrCreate(['email' => $role.'@fitstore.test'], [
+                'name' => $name, 'password' => Hash::make('password'),
+                'locale' => 'es', 'email_verified_at' => now(),
+            ]);
+        }
     }
 }
